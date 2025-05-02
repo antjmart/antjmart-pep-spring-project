@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exception.BlankUsernameException;
 import com.example.exception.DuplicateUsernameException;
 import com.example.exception.PasswordTooShortException;
+import com.example.exception.InvalidCredentialsException;
+import java.util.Optional;
 
 
 @Service
@@ -29,5 +31,16 @@ public class AccountService {
             throw new DuplicateUsernameException();
         else
             return accountRepo.save(account);
+    }
+
+    public Account loginUser(Account account) throws InvalidCredentialsException {
+        String username = account.getUsername();
+        String password = account.getPassword();
+        Optional<Account> accountLogin = accountRepo.findByUsernameAndPassword(username, password);
+
+        if (accountLogin.isPresent())
+            return accountLogin.get();
+        else
+            throw new InvalidCredentialsException();
     }
 }

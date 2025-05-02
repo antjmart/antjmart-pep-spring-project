@@ -24,8 +24,14 @@ public class SocialMediaController {
 
     @PostMapping("register")
     public ResponseEntity<Account> registerUser(@RequestBody Account account) throws DuplicateUsernameException, PasswordTooShortException, BlankUsernameException {
-        return ResponseEntity.status(HttpStatus.OK).body(accountService.registerUser(account));
+        return ResponseEntity.ok(accountService.registerUser(account));
     }
+
+    @PostMapping("login")
+    public ResponseEntity<Account> loginUser(@RequestBody Account account) throws InvalidCredentialsException {
+        return ResponseEntity.ok(accountService.loginUser(account));
+    }
+
 
     @ExceptionHandler(DuplicateUsernameException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -34,4 +40,8 @@ public class SocialMediaController {
     @ExceptionHandler({BlankUsernameException.class, PasswordTooShortException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void clientErrorStatus() {}
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public void unauthorizedStatus() {}
 }
