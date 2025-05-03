@@ -53,6 +53,12 @@ public class SocialMediaController {
         return ResponseEntity.ok(messageService.deleteMessage(messageId));
     }
 
+    @PatchMapping("messages/{messageId}")
+    public ResponseEntity<Integer> updateMessage(@PathVariable Integer messageId, @RequestBody String reqBody) throws InvalidMessageTextException, MessageNotExistsException {
+        String newText = reqBody.split("\"")[3];  // when splitting json object, index 3 gives the value
+        return ResponseEntity.ok(messageService.updateMessage(messageId, newText));
+    }
+
 
     @ExceptionHandler(DuplicateUsernameException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -61,7 +67,8 @@ public class SocialMediaController {
     @ExceptionHandler({BlankUsernameException.class,
                        PasswordTooShortException.class,
                        InvalidMessageTextException.class,
-                       UserNotExistsException.class})
+                       UserNotExistsException.class,
+                       MessageNotExistsException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void clientErrorStatus() {}
 

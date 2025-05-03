@@ -7,6 +7,7 @@ import com.example.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exception.InvalidMessageTextException;
 import com.example.exception.UserNotExistsException;
+import com.example.exception.MessageNotExistsException;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +49,19 @@ public class MessageService {
             return null;
         
         messageRepo.deleteById(id);
+        return 1;
+    }
+
+    public Integer updateMessage(Integer id, String newText) throws InvalidMessageTextException, MessageNotExistsException {
+        if (newText.isEmpty() || newText.length() > 255)
+            throw new InvalidMessageTextException();
+        
+        Optional<Message> message = messageRepo.findById(id);
+        if (message.isEmpty())
+            throw new MessageNotExistsException();
+        
+        message.get().setMessageText(newText);
+        messageRepo.save(message.get());
         return 1;
     }
 }
