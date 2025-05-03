@@ -43,6 +43,11 @@ public class SocialMediaController {
         return ResponseEntity.ok(messageService.getAllMessages());
     }
 
+    @GetMapping("messages/{messageId}")
+    public ResponseEntity<Message> getMessageById(@PathVariable Integer messageId) {
+        return ResponseEntity.ok(messageService.getMessageById(messageId));
+    }
+
 
     @ExceptionHandler(DuplicateUsernameException.class)
     @ResponseStatus(HttpStatus.CONFLICT)

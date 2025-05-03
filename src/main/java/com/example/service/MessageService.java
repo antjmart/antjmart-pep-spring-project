@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exception.InvalidMessageTextException;
 import com.example.exception.UserNotExistsException;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -35,5 +36,10 @@ public class MessageService {
 
     public List<Message> getAllMessages() {
         return messageRepo.findAll();
+    }
+
+    public Message getMessageById(Integer id) {
+        Optional<Message> message = messageRepo.findById(id);
+        return message.isPresent() ? message.get() : null;
     }
 }
