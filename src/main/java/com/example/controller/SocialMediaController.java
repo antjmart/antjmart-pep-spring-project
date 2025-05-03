@@ -44,8 +44,13 @@ public class SocialMediaController {
     }
 
     @GetMapping("messages/{messageId}")
-    public ResponseEntity<Message> getMessageById(@PathVariable Integer messageId) {
-        return ResponseEntity.ok(messageService.getMessageById(messageId));
+    public ResponseEntity<Message> getMessage(@PathVariable Integer messageId) {
+        return ResponseEntity.ok(messageService.getMessage(messageId));
+    }
+
+    @DeleteMapping("messages/{messageId}")
+    public ResponseEntity<Integer> deleteMessage(@PathVariable Integer messageId) {
+        return ResponseEntity.ok(messageService.deleteMessage(messageId));
     }
 
 
