@@ -7,6 +7,7 @@ import com.example.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.exception.InvalidMessageTextException;
 import com.example.exception.UserNotExistsException;
+import java.util.List;
 
 
 @Service
@@ -30,5 +31,9 @@ public class MessageService {
             throw new UserNotExistsException();
         
         return messageRepo.save(message);
+    }
+
+    public List<Message> getAllMessages() {
+        return messageRepo.findAll();
     }
 }

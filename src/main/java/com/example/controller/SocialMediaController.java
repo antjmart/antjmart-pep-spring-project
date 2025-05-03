@@ -9,6 +9,7 @@ import com.example.service.MessageService;
 import com.example.entity.Account;
 import com.example.entity.Message;
 import com.example.exception.*;
+import java.util.List;
 
 
 @RestController
@@ -35,6 +36,11 @@ public class SocialMediaController {
     @PostMapping("messages")
     public ResponseEntity<Message> createMessage(@RequestBody Message message) throws InvalidMessageTextException, UserNotExistsException {
         return ResponseEntity.ok(messageService.createMessage(message));
+    }
+
+    @GetMapping("messages")
+    public ResponseEntity<List<Message>> getAllMessages() {
+        return ResponseEntity.ok(messageService.getAllMessages());
     }
 
 
