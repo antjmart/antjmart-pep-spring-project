@@ -64,4 +64,8 @@ public class MessageService {
         messageRepo.save(message.get());
         return 1;
     }
+
+    public List<Message> getUserMessages(Integer accountId) {
+        return messageRepo.findByPostedBy(accountId);
+    }
 }
