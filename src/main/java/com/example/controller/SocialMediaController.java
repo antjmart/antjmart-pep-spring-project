@@ -32,12 +32,20 @@ public class SocialMediaController {
         return ResponseEntity.ok(accountService.loginUser(account));
     }
 
+    @PostMapping("messages")
+    public ResponseEntity<Message> createMessage(@RequestBody Message message) throws InvalidMessageTextException, UserNotExistsException {
+        return ResponseEntity.ok(messageService.createMessage(message));
+    }
+
 
     @ExceptionHandler(DuplicateUsernameException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public void conflictStatus() {}
 
-    @ExceptionHandler({BlankUsernameException.class, PasswordTooShortException.class})
+    @ExceptionHandler({BlankUsernameException.class,
+                       PasswordTooShortException.class,
+                       InvalidMessageTextException.class,
+                       UserNotExistsException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public void clientErrorStatus() {}
 

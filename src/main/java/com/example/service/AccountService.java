@@ -1,7 +1,6 @@
 package com.example.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.http.ResponseEntity;
 import com.example.repository.AccountRepository;
 import com.example.entity.Account;
 import org.springframework.beans.factory.annotation.Autowired;
